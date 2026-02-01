@@ -1,3 +1,6 @@
+const { expect } = require("@playwright/test");
+const { log } = require("console");
+
 class APiUtils
 {
 
@@ -5,7 +8,6 @@ class APiUtils
     {
         this.apiContext =apiContext; 
         this.loginPayLoad = loginPayLoad;
-        
     }
 
     async getToken()
@@ -14,6 +16,7 @@ class APiUtils
         {
             data:this.loginPayLoad
          } )//200,201,
+         expect(loginResponse.ok()).toBeTruthy();
         const loginResponseJson = await loginResponse.json();
         const token =loginResponseJson.token;
         console.log(token);
@@ -23,6 +26,7 @@ class APiUtils
 
     async createOrder(orderPayLoad)
     {
+       
         let response = {};
        response.token = await this.getToken();
     const orderResponse = await this.apiContext.post("https://rahulshettyacademy.com/api/ecom/order/create-order",

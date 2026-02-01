@@ -28,3 +28,12 @@ Before(async function () {
   });
 
   
+  // Before({tags:"@Regression"},async function () {
+  //   // This hook will be executed before all scenarios
+  //   console.log("i am first");
+  //   const browser = await playwright.chromium.launch({
+  //     headless: false,
+  // });
+  // const context = await browser.newContext();
+  //   this.page =  await context.newPage();
+  // });

@@ -12,11 +12,8 @@ test.beforeAll(async ({ browser }) => {
     await page.locator("#userPassword").fill("Iamking@000");
     await page.locator("[value='Login']").click();
     await page.waitForLoadState('networkidle');
-    await context.storageState({ path: 'state.json' });
-    webContext = await browser.newContext({ storageState: 'state.json' });
-
-
-
+    await context.storageState({ path: 'state.json' }); //store all the info in this json file for the browser eg cookies,sessions,storage etc
+    webContext = await browser.newContext({ storageState: 'state.json' }); //create new context and pass json data
 
 })
 

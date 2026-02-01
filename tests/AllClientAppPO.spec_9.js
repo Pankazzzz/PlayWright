@@ -2,12 +2,14 @@
  const {customtest} = require('../utils/test-base');
 
  const {POManager} = require('../pageobjects/POManager');
- //Json->string->js object
+ //Json->string->js object //1st way of parameterization(if you have only one set of data)
  const dataset =  JSON.parse(JSON.stringify(require("../utils/placeorderTestData.json")));
 
- 
+ //2nd way of parameterization(when u have multiple set of data)
 for(const data of dataset)
 {
+
+ test.describe.configure({mode:'parallel'}); //run test parallely
  test(`Webs Client App login for ${data.productName}`, async ({page})=>
  {
    const poManager = new POManager(page);
@@ -63,6 +65,7 @@ for(const data of dataset)
 //test files will trigger parallel
 //individual tests in the file will run in sequence
  
+
 
  
 

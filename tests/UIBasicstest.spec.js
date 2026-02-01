@@ -100,6 +100,8 @@
     console.log(domain);
     await page.locator("#username").fill(domain);
     console.log(await page.locator("#username").textContent());
+        console.log(await page.locator("#username").inputValue()); //get value for the element which is dyanamically set
+
 
 
 

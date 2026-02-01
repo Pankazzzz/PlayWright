@@ -23,7 +23,7 @@ const config = {
         headless : true,
         screenshot : 'off', //retain-on-failure
         trace : 'on',//off,on 
-        ...devices['iPhone 11'],    
+        ...devices['iPhone 11'],    //open in specific resolution
       }
 
     },
@@ -40,7 +40,7 @@ const config = {
         
         trace : 'on',//off,on
        // ...devices['']
-     //   viewport : {width:720,height:720}
+        //viewport : {width:720,height:720}. //open in this size
          }
 
     }

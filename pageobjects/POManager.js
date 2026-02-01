@@ -13,8 +13,6 @@ constructor(page)
     this.ordersHistoryPage = new OrdersHistoryPage(this.page);
     this.ordersReviewPage = new OrdersReviewPage(this.page);
     this.cartPage = new CartPage(this.page);
-
-
 }
 
 getLoginPage()
