@@ -32,11 +32,14 @@ test('@Web Browser Context-Validating Error login', async ({browser})=>
    const products = page.locator(".card-body");
    
    //locator
+   //css
    await page.goto("https://rahulshettyacademy.com/client");
    await page.locator("#userEmail").fill(email);
    await page.locator("#userPassword").type("Iamking@000");
    await page.locator("[value='Login']").click();
+   //text 
    await page.locator("text= Add To Cart").click();
+   //has-text
    await page.locator("h3:has-text('zara coat 3')").isVisible();
    
    await page.waitForLoadState('networkidle'); // wait for page to get stable and all network calls made
@@ -56,7 +59,6 @@ test('@Web Browser Context-Validating Error login', async ({browser})=>
    await expect(page.locator(".radiotextsty").last()).toBeChecked();
    expect(await page.locator("#terms").isChecked()).toBeFalsy();
    await expect(page.locator("")).toHaveAttribute("class","blinkingText");
-
  
  });
 
@@ -312,10 +314,14 @@ test('visual',async({page})=>
 //this is enough for now!!!
 
 
-const { test, expect } = require('@playwright/test');
+/*---------------------------------------Refer from here -----------------------------*/
 
-//test.describe.configure({mode:'parallel'});
-//test.describe.configure({mode:'serial'});
+const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
+
+test.describe.configure({mode:'parallel'});
+test.describe.configure({mode:'serial'});
+test.describe.configure({retries: 2 });
 
 test('Pratice Test', async ({ browser }) => {
 
@@ -342,6 +348,8 @@ test('Pratice Test', async ({ browser }) => {
     page.locator("").check();
     page.locator("").uncheck();
     page.locator("").hover();
+    page.locator("").dblclick();
+
     const textcont = page.locator("").textContent();
     const Alltextcont = page.locator("").allTextContents();
 
@@ -380,7 +388,10 @@ test('Pratice Test', async ({ browser }) => {
 
     //************************ Expect ************************
     expect(page.locator("[style*='block']")).toContainText("Incorrect");
+    expect(page.locator(".user__name [type='text']").first()).toHaveText(email);
     expect(page.locator("[style*='block']")).toBeChecked();
+    expect(page.getByText("Thankyou for the order.")).toBeVisible();
+    expect(page.locator("#displayed-text")).toBeHidden();
     expect(page.locator("")).toHaveAttribute('class', 'blinkingText');
 
     expect(page.locator("[style*='block']").isChecked()).toBeTruthy();
@@ -389,13 +400,9 @@ test('Pratice Test', async ({ browser }) => {
     expect(page.locator("[style*='block']").isEnabled()).toBeFalsy();
     expect(page.locator("[style*='block']").isHidden()).toBeFalsy();
     expect(page.locator("[style*='block']").isVisible()).toBeFalsy();
-    expect(page.getByText("Thankyou for the order.")).toBeVisible();
-    expect(page.locator("#displayed-text")).toBeHidden();
-
 
     const aexp = 'hello';
     const bexp = 'he';
-    expect(page.locator(".user__name [type='text']").first()).toHaveText(email);
     expect(aexp.includes(bexp)).toBeTruthy();
 
 
@@ -412,7 +419,6 @@ test('Pratice Test', async ({ browser }) => {
         documentLink.click()
     ]);
     const text = await newPage.locator(".red").textContent();
-
 
     //************************ Hierarchy ************************
     const products = page.locator(".card-body");
@@ -464,13 +470,64 @@ test('Pratice Test', async ({ browser }) => {
 
 });
 
+test.beforeAll('',()=>{});
+test.beforeEach('',()=>{});
+test.afterEach('',()=>{});
+test.afterAll('',()=>{});
+test.skip('',()=>{});
+test.only('',()=>{});
+
+test.beforeEach(async ({ page }) => {
+    
+    await page.dragAndDrop('#source', '#target');
+    
+    await page.keyboard.press('Enter');
+    await page.keyboard.type('Hello');
+
+    await expect.soft(page.locator("h1")).toHaveText("Hello");
+
+    await context.tracing.start({ screenshots: true, snapshots: true });
+    await context.tracing.stop({ path: 'trace.zip' });
+});
+
+test.afterEach(async ({ page }) => {
+    console.log("Test completed");
+});
 
 test.skip('Pratice Test 2', async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 });
 
 test.skip('Pratice Test 3', async function ({ page }) {
-    await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
+
+    //download
+    const [download] = await Promise.all([
+    page.waitForEvent('download'), // Waits for the download to start
+    //page.getByRole('button', { name: /^Download as PDF$/ }).click()
+    page.locator("button[class*='no_print']:first-of-type").first().click()
+    ]);
+    await download.saveAs('/Users/pankajshukla/Downloads/invoice.pdf');
+    const path = await download.path();
+
+
+    await page.getByText("Back to Home",{exact:true}).click();
+
+    await page.getByRole('button', { name: /^Download as PDF$/ }).scrollIntoViewIfNeeded();
+
+    await bookingW.first().waitFor({state:'visible'});
+
+    await page.locator(".form-floating").filter({has : page.locator("#t-passport-1")}).locator("input").fill("1234567AJSH")
+
+    await page.getByRole('option', { name: /^India$/ }).first().scrollIntoViewIfNeeded();
+
+    await expect(totalPrice.replaceAll(",","").trim()).toBe(highPrice.replaceAll(",","").trim());
+
+    await expect(page.getByPlaceholder("Flying From").last()).toHaveValue(/HKT/i);
+
+    await page.waitForSelector(".dropdown-menu.inner.show li a", { state: "visible" });
+
+
+
 });
 
 
