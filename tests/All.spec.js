@@ -323,7 +323,7 @@ test.describe.configure({mode:'parallel'});
 test.describe.configure({mode:'serial'});
 test.describe.configure({retries: 2 });
 
-test('Pratice Test', async ({ browser }) => {
+test('Pratice Test', async ({ browser,page }) => {
 
     const context = await browser.newContext();
     const page = await context.newPage();
@@ -498,42 +498,3 @@ test.skip('Pratice Test 2', async ({ page }) => {
     await page.goto("https://rahulshettyacademy.com/loginpagePractise/");
 });
 
-test.skip('Pratice Test 3', async function ({ page }) {
-
-    //download
-    const [download] = await Promise.all([
-    page.waitForEvent('download'), // Waits for the download to start
-    //page.getByRole('button', { name: /^Download as PDF$/ }).click()
-    page.locator("button[class*='no_print']:first-of-type").first().click()
-    ]);
-    await download.saveAs('/Users/pankajshukla/Downloads/invoice.pdf');
-    const path = await download.path();
-
-
-    await page.getByText("Back to Home",{exact:true}).click();
-
-    await page.getByRole('button', { name: /^Download as PDF$/ }).scrollIntoViewIfNeeded();
-
-    await bookingW.first().waitFor({state:'visible'});
-
-    await page.locator(".form-floating").filter({has : page.locator("#t-passport-1")}).locator("input").fill("1234567AJSH")
-
-    await page.getByRole('option', { name: /^India$/ }).first().scrollIntoViewIfNeeded();
-
-    await expect(totalPrice.replaceAll(",","").trim()).toBe(highPrice.replaceAll(",","").trim());
-
-    await expect(page.getByPlaceholder("Flying From").last()).toHaveValue(/HKT/i);
-
-    await page.waitForSelector(".dropdown-menu.inner.show li a", { state: "visible" });
-
-
-
-});
-
-
-
-
-
-
- 
- 

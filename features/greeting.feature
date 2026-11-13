@@ -7,7 +7,7 @@ Feature: Greeting
 		When Enter valid details and Place the Order
 		Then Verify order is present in the OrderHistory
 
-		 Examples:
+		Examples:
           | username    	  | 	password  |
           | anshika@gmail.com | Iamking@000   |
 
@@ -21,7 +21,7 @@ Feature: Greeting
 		Given a login to Ecommerce2 application with "<username>" and "<password>"
 		Then Verify Error message is displayed
 
-		 Examples:
+		Examples:
           | username    	  | 	password  |
           | anshika@gmail.com | Iamking@000   |
        

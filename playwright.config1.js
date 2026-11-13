@@ -12,6 +12,12 @@ const config = {
   
     timeout: 5000
   },
+
+   launchOptions: {
+
+            slowMo: 200
+
+        },
   
   reporter: 'html',
   projects : [
